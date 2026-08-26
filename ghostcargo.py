@@ -44,6 +44,26 @@ def hide_bits_in_pixels(pixel, secret_bits):
 
     return tuple(new_pixel_values)
 
+def text_to_binary(message):
+
+    #create an empty string for all binary bits
+    binary_bits = ""
+
+    #FOR each character in message
+    for char in message:
+        #convert character into its numeric value
+        numeric_value= ord(char)
+        #convert that number into 8-bit binary
+        binary = format(numeric_value, "08b")
+        #add those 8 bits to the binary string
+        binary_bits += binary
+
+    #return the complete binary string
+    return binary_bits
+
+
+
+
 def main():
     filename = "sparrow.png"
     x = int(input("Enter The Value Of The X Pixel: "))
