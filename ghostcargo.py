@@ -28,6 +28,21 @@ def binary_to_decimal(binary_value):
     decimal = int(binary_value, base=2)
     return decimal
       
+def hide_bits_in_pixels(pixel, secret_bits):
+    #converts the RGB pixel values into binary
+    #pixel = (0,0,0) into [  "00010011","01100110" "10101000"]
+    pixel_binary = convert_pixel_to_binary(pixel)
+
+    #create an empty collection for the modified RGB values
+    new_pixel_values = []
+
+    #FOR each binary color value in the pixel
+    for i in range(3):
+        altered_binary = replace_lsb(pixel_binary[i], secret_bits[i])
+        decimal_value = binary_to_decimal(altered_binary)
+        new_pixel_values.append(decimal_value)
+
+    return tuple(new_pixel_values)
 
 def main():
     filename = "sparrow.png"
@@ -40,10 +55,11 @@ def main():
 
     pixel_binary = (convert_pixel_to_binary(given_pixels))
 
-    altered_binary = (replace_lsb(binary_value=pixel_binary[0],secret_bit="1"))
+    #altered_binary = (replace_lsb(binary_value=pixel_binary[0],secret_bit="1"))
 
-    print(binary_to_decimal(altered_binary))
+    #print(binary_to_decimal(altered_binary))
 
 
 
-main()
+if __name__ == "__main__":
+    main()
