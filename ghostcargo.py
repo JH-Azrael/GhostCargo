@@ -61,6 +61,49 @@ def text_to_binary(message):
     #return the complete binary string
     return binary_bits
 
+def hide_message(image, message):
+    if "<END>" in message:
+        print("Error: <END> is reserved by GhostCargo.")
+        return
+
+    message = message + "<END>"
+
+    binary_message = text_to_binary(message)
+
+    width, height = image.size
+    bit_index = 0
+
+    for y in range(height):
+        for x in range(width):
+
+            if bit_index >= len(binary_message):
+                return image
+
+            pixel = get_pixel(x ,y, image)
+
+            secret_bits = binary_message[bit_index:bit_index + 3]
+
+            if len(secret_bits) < 3:
+                #Allows the function to continue working in the case that the final chunk of the message has 1 or 2 bits remaining. 
+                secret_bits = secret_bits.ljust(3,"0")
+
+            modified_pixel = hide_bits_in_pixels(pixel, secret_bits)
+
+            image.putpixel((x,y), modified_pixel)
+
+            bit_index+= 3
+
+    print("Error: Image is too small to hold this message.")
+    return None
+
+
+
+
+
+
+
+
+
 
 
 
@@ -78,6 +121,7 @@ def main():
     #altered_binary = (replace_lsb(binary_value=pixel_binary[0],secret_bit="1"))
 
     #print(binary_to_decimal(altered_binary))
+    
 
 
 

@@ -48,3 +48,15 @@ def test_binary_to_decimal():
 def test_text_to_binary():
     result = ghostcargo.text_to_binary("A")
     assert result == "01000001"
+
+
+def test_hide_message():
+    image = Image.new("RGB", (20, 20), (100, 100, 100))
+
+    result = ghostcargo.hide_message(image, "A")
+
+    assert result is not None
+
+    first_pixel = result.getpixel((0, 0))
+
+    assert first_pixel == (100, 101, 100)
