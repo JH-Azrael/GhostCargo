@@ -51,6 +51,20 @@ def test_text_to_binary():
 
 
 def test_hide_message():
+    # Create a small blank RGB image
+    image = Image.new("RGB", (20, 20), (100, 100, 100))
+
+    result = ghostcargo.hide_message(image, "A")
+
+    assert result is not None
+
+    # The first pixel should have been modified
+    first_pixel = result.getpixel((0, 0))
+
+    assert first_pixel != (100, 100, 100)
+
+
+def test_hide_message2():
     image = Image.new("RGB", (20, 20), (100, 100, 100))
 
     result = ghostcargo.hide_message(image, "A")
@@ -60,3 +74,33 @@ def test_hide_message():
     first_pixel = result.getpixel((0, 0))
 
     assert first_pixel == (100, 101, 100)
+
+
+def test_save_image(tmp_path):
+    image = Image.new("RGB", (2, 2), (10, 20, 30))
+
+    output_file = tmp_path / "saved.png"
+
+    ghostcargo.save_image(image, output_file)
+
+    assert output_file.exists()
+
+
+def test_get_lsb():
+    result = ghostcargo.get_lsb("01100101")
+
+    assert result == "1"
+
+
+def test_get_lsb_zero():
+    result = ghostcargo.get_lsb("01100100")
+
+    assert result == "0"
+
+
+def test_get_pixel_lsbs():
+    pixel = (100, 101, 100)
+
+    result = ghostcargo.get_pixel_lsbs(pixel)
+
+    assert result == "010"

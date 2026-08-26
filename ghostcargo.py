@@ -3,6 +3,9 @@
 
 from PIL import Image
 
+"""ENCODING"""
+
+
 def open_image(filename):
     image = Image.open(filename)
     return image
@@ -98,6 +101,39 @@ def hide_message(image, message):
 
 
 
+def save_image(image,output_filename):
+
+    image.save(output_filename)
+
+
+
+"""DECODING"""
+
+
+def get_lsb(binary_value):
+    lsb = binary_value[-1]
+    return lsb
+
+
+def get_pixel_lsbs(pixel):
+    lsb_string = ""
+
+    binary_values = convert_pixel_to_binary(pixel)
+
+    for RGB_values in binary_values:
+        result = get_lsb(RGB_values)
+        lsb_string+= result
+
+    return lsb_string
+
+
+def binary_to_character(binary_value):
+
+    
+
+
+
+
 
 
 
@@ -108,7 +144,7 @@ def hide_message(image, message):
 
 
 def main():
-    filename = "sparrow.png"
+    """filename = "sparrow.png"
     x = int(input("Enter The Value Of The X Pixel: "))
     y = int(input("Enter The Value Of The Y Pixel: "))
     returned_image = open_image(filename)
@@ -121,9 +157,27 @@ def main():
     #altered_binary = (replace_lsb(binary_value=pixel_binary[0],secret_bit="1"))
 
     #print(binary_to_decimal(altered_binary))
-    
+    """
+
+    filename = input("Enter the input image filename: ")
+
+    image = open_image(filename)
+
+    message = input("Enter the secret message: ")
+
+    modified_image = hide_message(image, message)
+
+    if modified_image is None:
+        return
+
+    output_filename = input("Enter the output filename: ")
+
+    save_image(modified_image, output_filename)
+
+    print("Message hidden successfully.")
 
 
 
+#Allows for pytest to work susessfully without crashing my program entirely
 if __name__ == "__main__":
     main()
