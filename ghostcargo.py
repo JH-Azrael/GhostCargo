@@ -162,50 +162,46 @@ def extract_message(image):
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 def main():
-    """filename = "sparrow.png"
-    x = int(input("Enter The Value Of The X Pixel: "))
-    y = int(input("Enter The Value Of The Y Pixel: "))
-    returned_image = open_image(filename)
 
-    given_pixels = get_pixel(x,y, returned_image)
-    print(given_pixels)
+    print("GhostCargo")
+    print("Welcome my fellow Pirates of the high seas!")
+    print("\n" + "1. Hide Message")
+    print("2. Extract Message")
 
-    pixel_binary = (convert_pixel_to_binary(given_pixels))
+    user_choice = input("Choose an option: ")
 
-    #altered_binary = (replace_lsb(binary_value=pixel_binary[0],secret_bit="1"))
+    if user_choice == "1":
+        filename = input("Enter the input image filename: ")
 
-    #print(binary_to_decimal(altered_binary))
-    """
+        image = open_image(filename)
 
-    filename = input("Enter the input image filename: ")
+        message = input("Enter the secret message: ")
 
-    image = open_image(filename)
+        modified_image = hide_message(image, message)
 
-    message = input("Enter the secret message: ")
+        if modified_image is None:
+            return
 
-    modified_image = hide_message(image, message)
+        output_filename = input("Enter the output filename: ")
 
-    if modified_image is None:
-        return
+        save_image(modified_image, output_filename)
 
-    output_filename = input("Enter the output filename: ")
+        print("Message hidden successfully.")
 
-    save_image(modified_image, output_filename)
+    elif user_choice == "2":
+        filename = input("Enter the encoded image filename: ")
 
-    print("Message hidden successfully.")
+        image = open_image(filename)
 
+        message = extract_message(image)
+
+        if message is not None:
+            print("Hidden message:")
+            print(message)
+
+    else:
+        print("Invalid option.")
 
 
 #Allows for pytest to work susessfully without crashing my program entirely

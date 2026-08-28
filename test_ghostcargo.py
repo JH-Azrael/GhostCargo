@@ -128,3 +128,13 @@ def test_extract_message_no_message():
     result = ghostcargo.extract_message(image)
 
     assert result is None
+
+
+def test_full_encode_decode():
+    image = Image.new("RGB", (50, 50), (100, 100, 100))
+
+    hidden_image = ghostcargo.hide_message(image, "Ghost Cargo Test")
+
+    result = ghostcargo.extract_message(hidden_image)
+
+    assert result == "Ghost Cargo Test"
