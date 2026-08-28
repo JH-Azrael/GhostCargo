@@ -104,3 +104,27 @@ def test_get_pixel_lsbs():
     result = ghostcargo.get_pixel_lsbs(pixel)
 
     assert result == "010"
+
+
+def test_binary_to_character():
+    result = ghostcargo.binary_to_character("01000001")
+
+    assert result == "A"
+
+
+def test_extract_message():
+    image = Image.new("RGB", (50, 50), (100, 100, 100))
+
+    hidden_image = ghostcargo.hide_message(image, "Hello")
+
+    result = ghostcargo.extract_message(hidden_image)
+
+    assert result == "Hello"
+
+
+def test_extract_message_no_message():
+    image = Image.new("RGB", (10, 10), (100, 100, 100))
+
+    result = ghostcargo.extract_message(image)
+
+    assert result is None

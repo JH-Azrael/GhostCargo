@@ -128,8 +128,38 @@ def get_pixel_lsbs(pixel):
 
 
 def binary_to_character(binary_value):
+    deciaml_value = binary_to_decimal(binary_value)
+    character = chr(deciaml_value)
+    return character
 
-    
+
+def extract_message(image):
+    extracted_bits = ""
+    decoded_message = ""
+
+    width, height = image.size
+
+    for y in range(height):
+        for x in range(width):
+            pixel = get_pixel(x,y, image)
+
+            lsb = get_pixel_lsbs(pixel)
+            extracted_bits += lsb
+
+        while len(extracted_bits) >= 8:
+            character_bits = extracted_bits[:8]
+            extracted_bits = extracted_bits[8:]
+
+            characters = binary_to_character(character_bits)
+            decoded_message += characters
+
+            if decoded_message.endswith("<END>"):
+                decoded_message = decoded_message[:-5]
+                return decoded_message
+
+    print("ERROR: No <END> marker found")
+    return None
+
 
 
 
