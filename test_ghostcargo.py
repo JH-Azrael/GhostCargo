@@ -138,3 +138,11 @@ def test_full_encode_decode():
     result = ghostcargo.extract_message(hidden_image)
 
     assert result == "Ghost Cargo Test"
+
+
+def test_calculate_capacity():
+    image = Image.new("RGB", (10, 10))
+
+    result = ghostcargo.calculate_capacity(image)
+
+    assert result == 32

@@ -160,6 +160,19 @@ def extract_message(image):
     print("ERROR: No <END> marker found")
     return None
 
+def calculate_capacity(image):
+    height,width = image.size
+
+    total_pixels = height * width
+
+    total_hidden_bits = total_pixels * 3
+
+    total_hidden_bytes = total_hidden_bits // 8
+
+    usable_message_capacity = total_hidden_bytes - 5
+
+    return usable_message_capacity
+
 
 
 def main():
@@ -176,7 +189,15 @@ def main():
 
         image = open_image(filename)
 
+        capacity = calculate_capacity(image)
+
+        print("This image can hold up to", capacity, "characters.")
+
         message = input("Enter the secret message: ")
+
+        if len(message) > capacity:
+            print("Error: Message is too large for this image.")
+            return
 
         modified_image = hide_message(image, message)
 
