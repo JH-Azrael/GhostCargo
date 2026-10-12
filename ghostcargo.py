@@ -3,6 +3,18 @@
 
 from PIL import Image
 
+
+def validate_image(filename):
+    filename = filename.lower()
+
+    if ".png" in filename:
+        return True
+    else:
+        print("Error: File Format Not Supported YEE SCALLYWAG! ")
+        return False
+
+
+
 """ENCODING"""
 
 
@@ -186,6 +198,9 @@ def main():
 
     if user_choice == "1":
         filename = input("Enter the input image filename: ")
+
+        if not validate_image(filename):
+            return 
 
         image = open_image(filename)
 
