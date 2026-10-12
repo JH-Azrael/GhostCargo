@@ -19,8 +19,15 @@ def validate_image(filename):
 
 
 def open_image(filename):
-    image = Image.open(filename)
-    return image
+    try:
+        image = Image.open(filename)
+        return image
+    except FileNotFoundError:
+        print("Error: File Not Found YA BLOOMIN' COCKROACHES")
+        return None
+    except OSError:
+        print("Error: Could Not Open the Image")
+        return None
 
 def get_pixel(x, y, image):
     pixels = image.getpixel((x,y))
@@ -203,6 +210,9 @@ def main():
             return 
 
         image = open_image(filename)
+
+        if image is None:
+            return
 
         capacity = calculate_capacity(image)
 
